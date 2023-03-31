@@ -1,0 +1,175 @@
+# Plotting the PCC results with standard deviations ----
+#All PCC results 
+TotalPCC=c(0.121,0.101,0.123,0.063,0.049,0.044)
+
+#Creating a dataframe with PCC results from CAR and UT to use for Standard deviations
+PCC=data.frame(CAR=c(0.121,0.101,0.123), UT=c(0.063,0.049,0.044))
+#Standard devitation for CAR-T
+sdCAR=sd(PCC$CAR)
+
+#Standard devitation for UT
+sdUT=sd(PCC$UT)
+
+#Adjusting the borders of the bar chart 
+par(mar=c(9,5,4,3))
+
+#Plotting a grouped barplot for the PCC results 
+b=barplot(TotalPCC, main="PCC for CAR-T and UT samples w. standard deviation",
+        ylab="PCC",
+        names.arg = c("CAR-1", "CAR-2","CAR-3","UT-1", "UT-2","UT-3"), las=2,
+        ylim=c(0,0.15),
+        col=c("green","green","green","blue","blue","blue"), space=c(1,0.1,0.1))
+ 
+#Plotting standard deviation for CAR-T
+arrows(x0=c(1.5,2.6,3.7),
+    y0=c(0.121,0.101,0.123)+sdCAR,
+   y1=c(0.121,0.101,0.123)-sdCAR,
+  angle=90,
+   code=3,
+  length=0.1)
+
+#Plotting standard deviation for UT
+arrows(x0=c(5.7,6.8,7.9),
+       y0=c(0.063,0.049,0.044)+sdUT,
+       y1=c(0.063,0.049,0.044)-sdUT,
+       angle=90,
+       code=3,
+       length=0.1)
+
+#Creating a legend to get an overview of the data
+legend("topright",c("CAR-T treated cancercells","Untreated cancercells"), 
+       col=c("green", "blue"), lty=c(1,1))
+        
+#Creating a grouped Barplot for CAR-T cancer cells analysis ----
+
+#Manually counted CAR-T cancercells
+manual=c(100,94,97)
+
+#Macros code counted CAR-T cancercells
+macros=c(154,137,154)
+
+countings=c("Manual", "Macros")
+
+#Combining the results
+TotalResults <- (rbind(manual, macros))
+
+#Adjusting the borders of the barplot
+par(mar=c(2.1,5.1,5.1,2.1))
+#Creating the grouped barplot
+barplot(TotalResults, beside=TRUE, main="Number of CAR-T cancer cells for our analysis vs. macros",
+        ylim=c(0,200),
+        ylab="Number of CAR-T cancercells",
+        col=c("red"), density=c(1000,20),
+        names=c("CAR-T 1", "CAR-T 2", "CAR-T 3"))
+
+legend("topright", c("Manual counted", "Macros counted"),
+  col=c("red"), lty=c(1,3), bty="n", xpd=TRUE)
+
+#Repeating for CAR-T t-cell analysis ----
+
+#Manually counted CAR-T t-cells
+manual=c(108,98,112)
+
+#Macros code counted CAR-T t-cells
+macros=c(113,86,102)
+
+countings=c("Manual", "Macros")
+
+#Combining the results
+TotalResults <- (rbind(manual, macros))
+
+#Creating the grouped barplot
+par(mar=c(2.1,5.1,5.1,2.1))
+barplot(TotalResults, beside=TRUE, main="Number of CAR-T t-cells for our analysis vs. macros",
+        ylim=c(0,200),
+        ylab="Number of CAR-T t-cells",
+        col=c("green"), density=c(1000,20),
+        names=c("CAR-T t-cells 1", "CAR-T t-cells 2", "CAR-T t-cells 3"))
+
+legend("topright", c("Manual counted", "Macros counted"),
+       col=c("green"), lty=c(1,2), bty="n", xpd=TRUE)
+
+#Now repeating for UT cancercells ----
+
+#Manual counted untreated cancercells
+manual=c(143,146,126)
+
+#Macros code counted untreated cancercells
+macros=c(151,147,159)
+
+#Combining the results
+TotalResults <- (rbind(manual, macros))
+
+#Adjusting the borders of the barplot
+par(mar=c(2.1,5.1,5.1,2.1))
+#Creating the grouped barplot
+barplot(TotalResults, beside=TRUE, main="Number of Untreated cancer cells for our analysis vs. macros",
+        ylim=c(0,200),
+        ylab="Number of UT cancercells",
+        col=c("red"), density=c(1000,20),
+        names=c("UT 1", "UT 2", "UT 3"))
+
+legend("topright", c("Manual counted", "Macros counted"),
+       col=c("red"), lty=c(1,3), bty="n", xpd=TRUE)
+
+#And the same for UT t-cells ----
+#Manual counted untreated t-cells
+manual=c(71,78,61)
+
+#Macros code counted untreated t-cells
+macros=c(71,68,59)
+
+#Combining the results
+TotalResults <- (rbind(manual, macros))
+
+#Adjusting the borders of the barplot
+par(mar=c(2.1,5.1,5.1,2.1))
+#Creating the grouped barplot
+barplot(TotalResults, beside=TRUE, main="Number of t-cells in untreated cancercells for our analysis vs. macros",
+        ylim=c(0,200),
+        ylab="Number of UT t-cells",
+        col=c("green"), density=c(1000,20),
+        names=c("UT t-cells 1", "UT t-cells 2", "UT t-cells 3"))
+
+legend("topright", c("Manual counted", "Macros counted"),
+       col=c("green"), lty=c(1,3), bty="n", xpd=TRUE)
+
+#Plotting number of active cells in CAR-T ----
+#Percentage of active t-cells manually counted
+activeCARmanual=c(33,26,20)
+
+#Percentage of active t-cells macros code counted
+activeCARmacros=c(35,27,21)
+
+#Combining the data
+TotalActive=rbind(activeCARmanual,activeCARmacros)
+
+#Creating the grouped barplot
+barplot(TotalActive, beside=TRUE, main="Active T-cells in CAR-T cancercells in percentage for our analysis vs. macros",
+ ylim=c(0,100),
+ ylab="Number of active t-cells in percentage [%]",
+ col=c("Green"),density=c(1000,20),
+ names=c("CAR-1 t-cells", "CAR-2 t-cells", "CAR-3 t-cells"))
+
+legend("topright", c("Manual counted", "Macros counted"),
+       col=c("green"), lty=c(1,3), bty="n", xpd=TRUE)
+
+#Now plotting percentage of active t-cells in untreated cancercells ----
+#Percentage of active t-cells manually counted
+activeUTmanual=c(24,18,26)
+
+#Percentage of active t-cells macros code counted
+activeUTmacros=c(23,21,27)
+
+#Combining the data
+TotalActive=rbind(activeUTmanual,activeUTmacros)
+
+#Creating the grouped barplot
+barplot(TotalActive, beside=TRUE, main="Active T-cells in untreated cancercells in percentage for our analysis vs. macros",
+        ylim=c(0,100),
+        ylab="Number of active t-cells in percentage [%]",
+        col=c("Green"),density=c(1000,20),
+        names=c("UT-1 t-cells", "UT-2 t-cells", "UT-3 t-cells"))
+
+legend("topright", c("Manual counted", "Macros counted"),
+       col=c("green"), lty=c(1,3), bty="n", xpd=TRUE)
